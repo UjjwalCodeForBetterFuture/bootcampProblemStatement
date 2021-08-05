@@ -6,7 +6,7 @@ public class CabRide {
     private static final int MINIMUM_FARE = 40;
 
     private final int distanceTravelled;
-    private int timeWaited;
+    private final int timeWaited;
 
     public CabRide(int distanceTravelledInKm, int timeWaited) {
         this.distanceTravelled = distanceTravelledInKm;
