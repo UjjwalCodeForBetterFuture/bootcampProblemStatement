@@ -14,6 +14,6 @@ public class CabRideTest {
     @Test
     public void cabFareShouldBe_20_For_2_KmTravelled() {
         CabRide cabRide = new CabRide(2);
-        assertEquals(20, cabRide.fare());
+        assertEquals(20, cabRide.fareForDistanceTravelled());
     }
 }
