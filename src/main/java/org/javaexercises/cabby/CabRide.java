@@ -3,12 +3,10 @@ package org.javaexercises.cabby;
 public class CabRide {
     private static final int FARE_PER_KM = 10;
     private static final int FARE_PER_MIN = 2;
+    private static final int MINIMUM_FARE = 40;
+
     private final int distanceTravelled;
     private int timeWaited;
-
-    public CabRide(int distanceTravelledInKm) {
-        this.distanceTravelled = distanceTravelledInKm;
-    }
 
     public CabRide(int distanceTravelledInKm, int timeWaited) {
         this.distanceTravelled = distanceTravelledInKm;
@@ -24,6 +22,6 @@ public class CabRide {
     }
 
     public int totalCabFare() {
-        return Math.max(fareForDistanceTravelled() + fareForMin(), 40);
+        return Math.max(fareForDistanceTravelled() + fareForMin(), MINIMUM_FARE);
     }
 }

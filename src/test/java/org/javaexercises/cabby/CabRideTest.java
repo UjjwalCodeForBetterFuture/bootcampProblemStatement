@@ -1,12 +1,13 @@
 package org.javaexercises.cabby;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CabRideTest {
     @Test
-    public void cabFareShouldBe_30_For_3_KmTravelled_10_For_5_min() {
+    public void cabFareShouldBe_30_For_3_KmTravelled_And_10_For_5_min() {
         CabRide cabRide = new CabRide(3, 5);
         assertEquals(30, cabRide.fareForDistanceTravelled());
         assertEquals(10, cabRide.fareForMin());
@@ -14,7 +15,7 @@ public class CabRideTest {
 
     @Test
     public void cabFareShouldBe_20_For_2_KmTravelled() {
-        CabRide cabRide = new CabRide(2);
+        CabRide cabRide = new CabRide(2, 0);
         assertEquals(20, cabRide.fareForDistanceTravelled());
     }
 
@@ -29,6 +30,7 @@ public class CabRideTest {
         CabRide cabRide = new CabRide(40, 5);
         assertEquals(410, cabRide.totalCabFare());
     }
+
     @Test
     public void miniFareCheck() {
         CabRide cabRide = new CabRide(2, 1);
