@@ -1,16 +1,18 @@
 package org.javaexercises.distance;
 
+import static org.javaexercises.Constant.MULTIPLICATION;
+
 public enum Unit {
 
-    KILOMETERS(1000000), METER(1000), CENTIMETER(10);
+    KILOMETERS(100000), METER(100), CENTIMETER(1);
 
-    private final Integer conversionFactor;
+    private final double conversionFactor;
 
     Unit(Integer conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 
-    public int getConvertedDistance(int distance) {
-        return distance * conversionFactor;
+    public double getConvertedDistanceByOperator(double distance, String operator) {
+        return operator == MULTIPLICATION ? distance * conversionFactor : distance / conversionFactor;
     }
 }

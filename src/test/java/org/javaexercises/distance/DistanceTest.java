@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.javaexercises.distance.Distance.*;
+import static org.javaexercises.distance.Distance.kilometer;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DistanceTest {
@@ -49,4 +50,13 @@ public class DistanceTest {
         assertEquals(kilometer(1).hashCode(), meter(1000).hashCode());
     }
 
+    @Test
+    public void addHundredMeterAndHundredMeterEquals200Meter() {
+        assertEquals(meter(200), meter(100).add(meter(100)));
+    }
+
+    @Test
+    public void add1KMAndHundredMeterEquals1_2KM() {
+        assertEquals(kilometer(1.2).hashCode(), kilometer(1).add(meter(200)).hashCode());
+    }
 }
