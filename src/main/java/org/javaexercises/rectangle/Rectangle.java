@@ -13,7 +13,7 @@ public class Rectangle {
     }
 
     public int area() {
-        return Math.multiplyExact(length , breadth);
+        return Math.multiplyExact(length, breadth);
     }
 
     public int perimeter() {
