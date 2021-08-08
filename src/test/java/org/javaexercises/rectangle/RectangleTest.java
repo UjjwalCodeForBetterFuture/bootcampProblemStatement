@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RectangleTest {
 
     @BeforeEach
-    void setup(){
+    void setup() {
 
     }
 
