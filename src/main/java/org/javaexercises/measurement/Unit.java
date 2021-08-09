@@ -8,18 +8,18 @@ public enum Unit {
     KILOGRAM(1000000, MASS), GRAM(1000, MASS), MILLIGRAM(1, MASS);
 
     private final double conversionFactor;
-    private final String measurementType;
+    private final String unitType;
 
-    Unit(Integer conversionFactor, String measurementType) {
+    Unit(Integer conversionFactor, String unitType) {
         this.conversionFactor = conversionFactor;
-        this.measurementType = measurementType;
+        this.unitType = unitType;
     }
 
-    public String getMeasurementType() {
-        return measurementType;
-    }
-
-    public double getConvertedMeasurementByOperator(double measurement, String operator) {
+    public double convert(double measurement, String operator) {
         return operator == MULTIPLICATION ? measurement * conversionFactor : measurement / conversionFactor;
+    }
+
+    public boolean isCompatibleWith(Unit unit) {
+        return unitType == unit.unitType;
     }
 }

@@ -7,11 +7,11 @@ import static org.javaexercises.Constant.MULTIPLICATION;
 
 public class Measurement {
 
-    private final double quantity;
+    private final double value;
     private final Unit unit;
 
     public Measurement(double quantity, Unit unit) {
-        this.quantity = quantity;
+        this.value = quantity;
         this.unit = unit;
     }
 
@@ -40,24 +40,27 @@ public class Measurement {
 
     }
 
-    public Measurement add(Measurement measurement) {
-        return convert(this, measurement.unit.getConvertedMeasurementByOperator(measurement.quantity, MULTIPLICATION) + this.unit.getConvertedMeasurementByOperator(this.quantity, MULTIPLICATION));
+    public Measurement add(Measurement measurement) throws Exception {
+        if (this.unit.isCompatibleWith(measurement.unit)) {
+            return convert(this, measurement.unit.convert(measurement.value, MULTIPLICATION) + this.unit.convert(this.value, MULTIPLICATION));
+        }
+        throw new Exception("Both are not from same measurement");
     }
 
     private Measurement convert(Measurement measurement, double result) {
-        return new Measurement(measurement.unit.getConvertedMeasurementByOperator(result, DIVIDEND), measurement.unit);
+        return new Measurement(measurement.unit.convert(result, DIVIDEND), measurement.unit);
     }
 
     @Override
-    public boolean equals(Object distanceReff) {
-        if (this == distanceReff) return true;
-        if (!(distanceReff instanceof Measurement)) return false;
-        Measurement distanceRef = (Measurement) distanceReff;
-        return distanceRef.unit.getConvertedMeasurementByOperator(distanceRef.quantity, MULTIPLICATION) == unit.getConvertedMeasurementByOperator(quantity, MULTIPLICATION) && unit.getMeasurementType() == distanceRef.unit.getMeasurementType();
+    public boolean equals(Object measurementReference) {
+        if (this == measurementReference) return true;
+        if (!(measurementReference instanceof Measurement)) return false;
+        Measurement measurementReff = (Measurement) measurementReference;
+        return measurementReff.unit.convert(measurementReff.value, MULTIPLICATION) == unit.convert(value, MULTIPLICATION) && this.unit.isCompatibleWith(measurementReff.unit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(unit.getConvertedMeasurementByOperator(quantity, MULTIPLICATION));
+        return Objects.hashCode(unit.convert(value, MULTIPLICATION));
     }
 }

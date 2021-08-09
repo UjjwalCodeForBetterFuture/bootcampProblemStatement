@@ -49,12 +49,12 @@ public class MeasurementTest {
     }
 
     @Test
-    public void addHundredMeterAndHundredMeterEquals200Meter() {
+    public void addHundredMeterAndHundredMeterEquals200Meter() throws Exception {
         assertEquals(meter(200), meter(100).add(meter(100)));
     }
 
     @Test
-    public void add1KMAndHundredMeterEquals1_2KM() {
+    public void add1KMAndHundredMeterEquals1_2KM() throws Exception {
         assertEquals(kilometer(1.2).hashCode(), kilometer(1).add(meter(200)).hashCode());
     }
 
@@ -87,5 +87,15 @@ public class MeasurementTest {
     @Test
     public void oneGramShouldNotEqualOneCentimeter() {
         assertFalse(milligram(1).equals(centimeter(1)));
+    }
+
+    @Test
+    public void shouldNotAddMassAndWeight() {
+        assertThrows(Exception.class, () -> gram(100).add(kilogram(1.2)));
+    }
+
+    @Test
+    public void addOneKiloGramAndHundredGramEquals200Gram() throws Exception {
+        assertEquals(gram(1300), gram(100).add(kilogram(1.2)));
     }
 }
