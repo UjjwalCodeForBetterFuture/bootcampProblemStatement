@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AttendantTest {
 
@@ -19,8 +20,11 @@ public class AttendantTest {
         ParkingLot parkingLotB = new ParkingLot(3);
         Attendant attendant = new Attendant(new ArrayList<ParkingLot>(Arrays.asList(parkingLotA, parkingLotB)));
         Object vehicle = new Object();
+        parkingLotA.parkVehicle(new Object());
+        parkingLotA.parkVehicle(new Object());
+        parkingLotB.parkVehicle(new Object());
         //
-        assertEquals(parkingLotA, attendant.parkVehicleInFreeParkingLot(vehicle));
+        assertEquals(parkingLotA.hashCode(), attendant.parkVehicleFromObserverPattern(vehicle).hashCode());
     }
 
     @Test
@@ -31,19 +35,20 @@ public class AttendantTest {
         Object vehicle = new Object();
         parkingLotA.parkVehicle(new Object());
         parkingLotB.parkVehicle(new Object());
-        assertThrows(Exception.class,()-> attendant.parkVehicleInFreeParkingLot(vehicle));
+        Attendant finalAttendant = attendant;
+        assertThrows(Exception.class, () -> finalAttendant.parkVehicleFromObserverPattern(vehicle));
     }
 
     @Test
     public void attendantShouldAbleToParkInSecondParkingSpaceIfFirstIsFull() throws Exception {
         ParkingLot parkingLotA = new ParkingLot(2);
         ParkingLot parkingLotB = new ParkingLot(4);
+        Attendant attendant = new Attendant(new ArrayList<ParkingLot>(Arrays.asList(parkingLotA, parkingLotB)));
         parkingLotA.parkVehicle(new Object());
         parkingLotA.parkVehicle(new Object());
         parkingLotB.parkVehicle(new Object());
-        Attendant attendant = new Attendant(new ArrayList<ParkingLot>(Arrays.asList(parkingLotA, parkingLotB)));
         Object vehicle = new Object();
-        assertEquals(parkingLotB, attendant.parkVehicleInFreeParkingLot(vehicle));
+        assertEquals(parkingLotB, attendant.parkVehicleFromObserverPattern(vehicle));
     }
 
     @Test
@@ -52,7 +57,7 @@ public class AttendantTest {
         ParkingLot parkingLotB = new ParkingLot(3);
         Attendant attendant = new Attendant(new ArrayList<ParkingLot>(Arrays.asList(parkingLotA, parkingLotB)));
         Object vehicle = new Object();
-        ParkingLot parkingLot = attendant.parkVehicleInFreeParkingLot(vehicle);
+        ParkingLot parkingLot = attendant.parkVehicleFromObserverPattern(vehicle);
         Assertions.assertTrue(attendant.unParkVehicleFromParkingLot(vehicle, parkingLot));
     }
 
@@ -62,7 +67,7 @@ public class AttendantTest {
         ParkingLot parkingLotB = new ParkingLot(3);
         Attendant attendant = new Attendant(new ArrayList<ParkingLot>(Arrays.asList(parkingLotA, parkingLotB)));
         Object vehicle = new Object();
-        ParkingLot parkingLot = attendant.parkVehicleInFreeParkingLot(vehicle);
+        ParkingLot parkingLot = attendant.parkVehicleFromObserverPattern(vehicle);
         Assertions.assertTrue(attendant.unParkVehicleFromParkingLot(vehicle, parkingLot));
     }
 }

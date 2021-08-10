@@ -1,41 +1,37 @@
 package org.javaexercises.parkinglottest;
 
-import org.javaexercises.parkinglot.Attendant;
-import org.javaexercises.parkinglot.Listener;
 import org.javaexercises.parkinglot.ParkingLot;
+import org.javaexercises.parkinglot.ParkingLotListener;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParkingLotTest {
-    Listener listener = new DummyParkingLotOwner();
+    ParkingLotListener parkingLotListener = new DummyParkingLotOwner();
 
     @Test
     public void checkParkingAvailableWith10Slots() {
-        ParkingLot parkingLot = new ParkingLot(10, listener);
+        ParkingLot parkingLot = new ParkingLot(10, parkingLotListener);
         assertTrue(parkingLot.parkVehicle(new Object()));
-
     }
 
     @Test
     public void checkParkingAvailableWithExistingVehicle() {
-        ParkingLot parkingLot = new ParkingLot(1, listener);
+        ParkingLot parkingLot = new ParkingLot(1, parkingLotListener);
         parkingLot.parkVehicle(new Object());
         assertFalse(parkingLot.parkVehicle(new Object()));
     }
 
     @Test
     public void shouldNotBeAbleToUnparkFromEmptyParkingLot() {
-        ParkingLot parkingLot = new ParkingLot(0, listener);
+        ParkingLot parkingLot = new ParkingLot(0, parkingLotListener);
         assertFalse(parkingLot.unParkVehicle(new Object()));
     }
 
     @Test
     public void shouldBeUnparkAVehicle() {
-        ParkingLot parkingLot = new ParkingLot(2, listener);
+        ParkingLot parkingLot = new ParkingLot(2, parkingLotListener);
         Object vehicle = new Object();
         parkingLot.parkVehicle(vehicle);
         assertTrue(parkingLot.unParkVehicle(vehicle));
@@ -43,7 +39,7 @@ class ParkingLotTest {
 
     @Test
     public void shouldNotBeUnparkTheNotExistVehicle() {
-        ParkingLot parkingLot = new ParkingLot(2, listener);
+        ParkingLot parkingLot = new ParkingLot(2, parkingLotListener);
         Object vehicle = new Object();
         Object newVehicle = new Object();
         parkingLot.parkVehicle(vehicle);
@@ -52,7 +48,7 @@ class ParkingLotTest {
 
     @Test
     public void checkUnparkTheSameVehicle() {
-        ParkingLot parkingLot = new ParkingLot(1, listener);
+        ParkingLot parkingLot = new ParkingLot(1, parkingLotListener);
         Object vehicle = new Object();
         assertFalse(parkingLot.unParkVehicle(vehicle));
     }
@@ -97,16 +93,14 @@ class ParkingLotTest {
     }
 
 
-
-
-    private static class DummyParkingLotOwner implements Listener {
+    private static class DummyParkingLotOwner implements ParkingLotListener {
         @Override
-        public void notifyLotFull() {
+        public void notifyLotFull(ParkingLot parkingLot) {
             wasNotified = true;
         }
 
         @Override
-        public void notifyWhenAvailable() {
+        public void notifyWhenAvailable(ParkingLot parkingLot) {
             wasNotifiedWhenAvailable = true;
         }
 

@@ -2,22 +2,26 @@ package org.javaexercises.parkinglot;
 
 import java.util.HashSet;
 
-import static org.javaexercises.parkinglot.Listener.NULL;
+import static org.javaexercises.parkinglot.ParkingLotListener.NULL;
 
 public class ParkingLot {
 
     private final int maxCapacity;
     private HashSet<Object> vehicles;
-    Listener parkingLotListener = NULL;
+    ParkingLotListener parkingLotListener = NULL;
 
     public ParkingLot(int maxCapacity) {
         this(maxCapacity, NULL);
 
     }
 
-    public ParkingLot(int maxCapacity, Listener parkingLotListener) {
+    public ParkingLot(int maxCapacity, ParkingLotListener parkingLotListener) {
         this.maxCapacity = maxCapacity;
         this.vehicles = new HashSet<>(maxCapacity);
+        this.parkingLotListener = parkingLotListener;
+    }
+
+    public void registerListener(ParkingLotListener parkingLotListener) {
         this.parkingLotListener = parkingLotListener;
     }
 
@@ -39,13 +43,13 @@ public class ParkingLot {
 
     private void notifyOwner() {
         if (isParkingFull()) {
-            parkingLotListener.notifyLotFull();
+            parkingLotListener.notifyLotFull(this);
         }
     }
 
     private void notifyOwnerWhenAvailable() {
         if (!isParkingFull() && vehicles.size() == maxCapacity - 1) {
-            parkingLotListener.notifyWhenAvailable();
+            parkingLotListener.notifyWhenAvailable(this);
         }
     }
 
